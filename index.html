@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <script type="text/javascript" src="chop.js"></script>
+    <style type="text/css">
+        .blue { color : blue; }
+        .green { color : green; }
+    </style>
+    <title>Chop Saw App</title>
+</head>
+<body>
+    <form action="">
+        <fieldset>
+            <legend>Settings</legend>
+            <input id="unit_in" type="radio" name="unit" value="in" checked />
+            <label for="unit_in">Inches</label>
+            <input id="unit_mm" type="radio" name="unit" value="mm" />
+            <label for="unit_mm">Millimeters</label>
+            <input id="bit_diameter" type="text" name="bit_diameter" value=".5" />
+            <label for="bit_diameter">Bit Diameter</label>
+            <input id="safe_z" type="text" name="safe_z" value=".5" />
+            <label for="safe_z">Safe Z</label>
+        </fieldset>
+        <fieldset>
+            <legend>Miter</legend>
+            <input id="angle" type="text" name="angle" value="0" />
+            <label for="angle">Miter angle</label>
+            <input id="tilt_right" type="radio" name="tilt" value="right" checked />
+            <label for="tilt_right">Tilt the miter to the right</label>
+            <input id="tilt_left" type="radio" name="tilt" value="left" />
+            <label for="tilt_left">Tilt the miter to the left</label>
+        </fieldset>
+        <fieldset>
+            <legend>Board</legend>
+            <input id="board_length" type="text" name="board_length" value="10" />
+            <label for="board_length">Board length</label>
+            <input id="back_length" type="text" name="back_length" value="20" />
+            <label class="blue" for="back_length">Cut length (back)</label>
+            <input id="front_length" type="text" name="front_length" value="20" />
+            <label class="green" for="front_length">Cut length (front)</label>
+            <button id="reverse" type="button">Reverse the cut direction</button>
+            <input id="board_thickness" type="text" name="board_thickness" value=".75" />
+            <label for="board_thickness">Board thickness</label>
+            <input id="cut_height" type="text" name="cut_height" value="0.00" />
+            <label for="cut_height">Cut height (from</label>
+            <input id="cut_number" type="text" name="cut_number" value="1" />
+            <label for="cut_number">Number of cutting</label>
+        </fieldset>
+        <fieldset>
+            <legend>Cut</legend>
+            <input id="cut_pos_right" type="radio" name="cut_pos" value="right" checked />
+            <label for="cut_pos_right">Cut to the right of the line</label>
+            <input id="cut_pos_center" type="radio" name="cut_pos" value="center" />
+            <label for="cut_pos_center">Cut on center of the line</label>
+            <button id="draw" type="button">Draw preview</button>
+            <button id="make" type="button">Make the cut</button>
+        </fieldset>
+    </form>
+    <canvas id="canvas" width="300" height="300"></canvas>
+</body>
+</html>
