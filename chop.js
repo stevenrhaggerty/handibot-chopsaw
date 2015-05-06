@@ -22,24 +22,27 @@ function convertMmToIn(millimeters) {
 }
 
 function draw() {
-    var itp = 0;  //Inch To Pixel
+    var vtp = 0;  //Value To Pixel
     var bottom = 290; //To have the y go up and (0,0) is in the bottom left corner
     var xFront, yFront, xBack, yBack;
-    if( document.getElementById("unit_in").checked == true)
-        itp = inToPx;
+    var halfBit;  //The half of the bit diameter
+    var distanceCutBit = 0;
+
+    if(document.getElementById("unit_in").checked == true)
+        vtp = inToPx;
     else
-        itp = convertMmToIn(inToPx);
+        vtp = convertMmToIn(inToPx);
 
     if(cutBack)
         calculateFrontLength();
     else
         calculateBackLength();
 
-    //TODO: décaller si centrer ou à drotie
-    xFront = parseFloat(frontLength.value) * itp;
+    xFront = parseFloat(frontLength.value) * vtp;
     yFront = bottom;
-    xBack = parseFloat(backLength.value) * itp;
-    yBack = bottom - (parseFloat(boardLength.value) * itp);
+    xBack = parseFloat(backLength.value) * vtp;
+    yBack = bottom - (parseFloat(boardLength.value) * vtp);
+    halfBit = (parseFloat(bitDiameter.value)) / 2 * vtp;
 
     ctx.clearRect ( 0 , 0 , canvas.width, canvas.height );
 
@@ -84,14 +87,12 @@ function draw() {
     //Drawing the mitter
     ctx.beginPath();
     if(document.getElementById("cut_pos_right").checked == true) {
-        ctx.moveTo((parseFloat(bitDiameter.value)) + xBack, yBack);
-        ctx.lineTo((parseFloat(bitDiameter.value)) + xFront, yFront);
+        //No need to mutiply by vtp, halfBit is already converted
+        distanceCutBit = halfBit / Math.cos(parseFloat(angle.value) * Math.PI / 180);
     }
-    else {
-        ctx.moveTo(xBack, yBack);
-        ctx.lineTo(xFront, yFront);
-    }
-    ctx.lineWidth = parseFloat(bitDiameter.value) * itp;
+    ctx.moveTo(xBack + distanceCutBit, yBack);
+    ctx.lineTo(xFront + distanceCutBit, yFront);
+    ctx.lineWidth = parseFloat(bitDiameter.value) * vtp;
     ctx.strokeStyle = "#FF0000";
     ctx.stroke();
 
@@ -99,7 +100,7 @@ function draw() {
     ctx.beginPath();
     ctx.moveTo(xBack, yBack);
     ctx.lineTo(xFront, yFront);
-    ctx.lineWidth = 1;
+    ctx.lineWidth = 2;
     ctx.strokeStyle = "#000000";
     ctx.stroke();
 }
