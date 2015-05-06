@@ -10,7 +10,7 @@ var cutHeight;
 var cutNumber;
 var canvas;
 var ctx;
-var inToPx=10;  //Define how much pixel a inch is equal
+// var inToPx=10;  //Define how much pixel a inch is equal
 var cutBack = true;
 
 function convertInToMm(inches) {
@@ -21,26 +21,34 @@ function convertMmToIn(millimeters) {
     return (isNaN(millimeters)) ? 0.0 : (parseFloat(millimeters) / 25.4);
 }
 
+function inchToPixel() {
+    var itp = parseFloat(document.getElementById("in_to_px").value);
+    if(isNaN(itp))
+        return 0;
+    return itp;
+}
+
 function draw() {
     var vtp = 0;  //Value To Pixel
-    var bottom = 290; //To have the y go up and (0,0) is in the bottom left corner
+    var margin = 10;
+    var bottom = parseInt(canvas.height) - margin; //To have the y go up and (0,0) is in the bottom left corner
     var xFront, yFront, xBack, yBack;
     var halfBit;  //The half of the bit diameter
-    var distanceCutBit = 0;
+    var shift = 0, rise = 0; //hence representation of the mitter when angle > 0
 
     if(document.getElementById("unit_in").checked == true)
-        vtp = inToPx;
+        vtp = inchToPixel();
     else
-        vtp = convertMmToIn(inToPx);
+        vtp = convertMmToIn(inchToPixel());
 
     if(cutBack)
         calculateFrontLength();
     else
         calculateBackLength();
 
-    xFront = parseFloat(frontLength.value) * vtp;
+    xFront = margin + parseFloat(frontLength.value) * vtp;
     yFront = bottom;
-    xBack = parseFloat(backLength.value) * vtp;
+    xBack = margin + parseFloat(backLength.value) * vtp;
     yBack = bottom - (parseFloat(boardLength.value) * vtp);
     halfBit = (parseFloat(bitDiameter.value)) / 2 * vtp;
 
@@ -48,7 +56,7 @@ function draw() {
 
     //Drawing the back
     ctx.beginPath();
-    ctx.moveTo(0, yBack);
+    ctx.moveTo(margin, yBack);
     ctx.lineTo(xBack, yBack);
     ctx.lineWidth = 3;
     ctx.strokeStyle = "#0000FF";
@@ -63,7 +71,7 @@ function draw() {
 
     //Drawing the front
     ctx.beginPath();
-    ctx.moveTo(0, yFront);
+    ctx.moveTo(margin, yFront);
     ctx.lineTo(xFront, yFront);
     ctx.lineWidth = 3;
     ctx.strokeStyle = "#00FF00";
@@ -78,8 +86,8 @@ function draw() {
 
     //Drawing the board
     ctx.beginPath();
-    ctx.moveTo(0, yBack);
-    ctx.lineTo(0, yFront);
+    ctx.moveTo(margin, yBack);
+    ctx.lineTo(margin, yFront);
     ctx.lineWidth = 3;
     ctx.strokeStyle = "#000000";
     ctx.stroke();
@@ -88,10 +96,14 @@ function draw() {
     ctx.beginPath();
     if(document.getElementById("cut_pos_right").checked == true) {
         //No need to mutiply by vtp, halfBit is already converted
-        distanceCutBit = halfBit / Math.cos(parseFloat(angle.value) * Math.PI / 180);
+        shift = halfBit*Math.cos(parseFloat(angle.value)*Math.PI/180);
+        rise = halfBit*Math.sin(parseFloat(angle.value)*Math.PI/180);
+        if(document.getElementById("tilt_left").checked == true) {
+            rise *= -1;
+        }
     }
-    ctx.moveTo(xBack + distanceCutBit, yBack);
-    ctx.lineTo(xFront + distanceCutBit, yFront);
+    ctx.moveTo(xBack + shift, yBack + rise);
+    ctx.lineTo(xFront + shift, yFront + rise);
     ctx.lineWidth = parseFloat(bitDiameter.value) * vtp;
     ctx.strokeStyle = "#FF0000";
     ctx.stroke();
@@ -155,6 +167,8 @@ function initialize() {
     cutNumber = document.getElementById("cut_number");
 
     canvas = document.getElementById("canvas");
+    canvas.height = document.getElementById("form_chop").clientHeight;
+    canvas.width = parseInt(document.getElementById("form_chop").clientWidth)*2;
     ctx = canvas.getContext("2d");
 
     frontLength.disabled = cutBack;
@@ -183,21 +197,22 @@ function initialize() {
         cutHeight.value      = convertInToMm(cutHeight.value);
     }, false);
 
+    document.getElementById("in_to_px").addEventListener("change", function(e) {
+        draw();
+    });
+
     document.getElementById("bit_diameter").addEventListener("change", function(e) {
         draw();
     });
 
     //The angle change
     angle.addEventListener("change", function(e) {
-        // calculateBackLength();
         draw();
     });
     document.getElementById("tilt_right").addEventListener("change", function(e) {
-        // calculateBackLength();
         draw();
     });
     document.getElementById("tilt_left").addEventListener("change", function(e) {
-        // calculateBackLength();
         draw();
     });
 

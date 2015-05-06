@@ -13,13 +13,16 @@
     <title>Chop Saw App</title>
 </head>
 <body>
-    <form action="">
+    <form id="form_chop" action="">
         <fieldset>
             <legend>Settings</legend>
             <input id="unit_in" type="radio" name="unit" value="in" checked />
             <label for="unit_in">Inches</label>
             <input id="unit_mm" type="radio" name="unit" value="mm" />
             <label for="unit_mm">Millimeters</label>
+            <br />
+            <input id="in_to_px" type="text" name="in_to_px" value="10" />
+            <label for="in_to_px">Pixels for an inch</label>
             <br />
             <input id="bit_diameter" type="text" name="bit_diameter" value=".5" />
             <label for="bit_diameter">Bit Diameter</label>
