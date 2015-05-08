@@ -2,17 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <script type="text/javascript" src="js/chop.js"></script>
-    <style type="text/css">
-        .blue { color : blue; }
-        .green { color : green; }
-        input[type="text"] { width : 80px; }
-        canvas { border : 1px solid black; margin : 3px; }
-        form { float : left; border : 1px solid black; margin : 3px; }
-    </style>
+    <script type="text/javascript" src="chop.js"></script>
+    <link rel="stylesheet" href="styles.css" />
     <title>Chop Saw App</title>
 </head>
 <body>
+    <p id="show_explanations">Click here to show/hide the explanations.</p>
+    <div id="explanations">
+        <p>This app is used to cut a board as would do a Chop Saw or a Miter Saw.</p>
+        <h3>Settings</h3>
+        <ul>
+            <li><strong>Unit</strong>: Chose the unit used.</li>
+            <li><strong>Pixels for an inch</strong>: Chose how much pixel represents an inch on the screen.</li>
+            <li><strong>Bit Diameter</strong>: The diameter of the bit of the machine.</li>
+            <li><strong>Safe Z</strong>: ?</li>
+        </ul>
+        <h3>Miter</h3>
+        <ul>
+            <li><strong>Miter angle</strong>: the angle of the miter.</li>
+            <li><strong>Tilt</strong>: the direction of the tilt.</li>
+        </ul>
+        <h3>Board</h3>
+        <ul>
+            <li><strong>Board length</strong>: the board length.</li>
+            <li><strong>Cut length (back edge)</strong>: the length of the back edge after the cut (represented on the top in blue).</li>
+            <li><strong>Cut length (front edge)</strong>: the length of the front edge after the cut (represented on the bottom in green).</li>
+            <li><strong>Reverse the cut direction</strong>: chose if this is the front edge or the back edge which is modified.</li>
+            <li><strong>Board thickness</strong>: the board thickness.</li>
+            <li><strong>Cut height (from tabletop)</strong>: the cut height.</li>
+            <li><strong>Number of Cutting Passes</strong>: the number of cutting passes the machine will do.</li>
+        </ul>
+        <h3>Cut</h3>
+        Chose if the miter passes on the center of the cut or on its right.
+    </div>
     <form id="form_chop" action="">
         <fieldset>
             <legend>Settings</legend>

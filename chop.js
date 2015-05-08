@@ -183,6 +183,17 @@ function initialize() {
     backLength.disabled = !cutBack;
 
     draw();
+
+    //Explanations
+    document.getElementById("show_explanations").addEventListener("click", function(event) {
+        explanations = document.getElementById("explanations");
+        if(explanations.style.display == "none" || explanations.style.display == "")
+            explanations.style.display = "block";
+        else
+            explanations.style.display = "none";
+    }, false);
+
+
     //Settings part
     //The conversion
     document.getElementById("unit_in").addEventListener("change", function(event) {
