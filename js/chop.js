@@ -13,6 +13,14 @@ var ctx;
 // var inToPx=10;  //Define how much pixel a inch is equal
 var cutBack = true;
 
+function checkFloat(element) {
+    if(isNaN(parseFloat(element.value)))
+        element.value = 0;
+    else
+        element.value = parseFloat(element.value);
+}
+
+
 function convertInToMm(inches) {
     return (isNaN(inches)) ? 0.0 : (parseFloat(inches) * 25.4);
 }
@@ -198,15 +206,18 @@ function initialize() {
     }, false);
 
     document.getElementById("in_to_px").addEventListener("change", function(e) {
+        checkFloat(this);
         draw();
     });
 
     document.getElementById("bit_diameter").addEventListener("change", function(e) {
+        checkFloat(this);
         draw();
     });
 
     //The angle change
     angle.addEventListener("change", function(e) {
+        checkFloat(this);
         draw();
     });
     document.getElementById("tilt_right").addEventListener("change", function(e) {
@@ -216,22 +227,17 @@ function initialize() {
         draw();
     });
 
-    //Cut position
-    document.getElementById("cut_pos_right").addEventListener("change", function(e) {
-        draw();
-    });
-    document.getElementById("cut_pos_center").addEventListener("change", function(e) {
-        draw();
-    });
-
     //The board change
     document.getElementById("front_length").addEventListener("change", function(e) {
+        checkFloat(this);
         draw();
     });
     document.getElementById("back_length").addEventListener("change", function(e) {
+        checkFloat(this);
         draw();
     });
     document.getElementById("board_length").addEventListener("change", function(e) {
+        checkFloat(this);
         draw();
     });
     document.getElementById("reverse").addEventListener("click", function(e) {
@@ -240,6 +246,13 @@ function initialize() {
         backLength.disabled = !cutBack;
     });
 
+    //Cut position
+    document.getElementById("cut_pos_right").addEventListener("change", function(e) {
+        draw();
+    });
+    document.getElementById("cut_pos_center").addEventListener("change", function(e) {
+        draw();
+    });
 }
 
 window.onload = initialize;

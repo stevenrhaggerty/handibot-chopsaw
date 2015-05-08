@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <script type="text/javascript" src="chop.js"></script>
+    <script type="text/javascript" src="js/chop.js"></script>
     <style type="text/css">
         .blue { color : blue; }
         .green { color : green; }
@@ -47,10 +47,10 @@
             <label for="board_length">Board length</label>
             <br />
             <input id="back_length" type="text" name="back_length" value="20" />
-            <label class="blue" for="back_length">Cut length (back)</label>
+            <label class="blue" for="back_length">Cut length (back edge)</label>
             <br />
             <input id="front_length" type="text" name="front_length" value="20" />
-            <label class="green" for="front_length">Cut length (front)</label>
+            <label class="green" for="front_length">Cut length (front edge)</label>
             <br />
             <button id="reverse" type="button">Reverse the cut direction</button>
             <br />
@@ -58,10 +58,10 @@
             <label for="board_thickness">Board thickness</label>
             <br />
             <input id="cut_height" type="text" name="cut_height" value="0.00" />
-            <label for="cut_height">Cut height (from</label>
+            <label for="cut_height">Cut height (from tabletop)</label>
             <br />
             <input id="cut_number" type="text" name="cut_number" value="1" />
-            <label for="cut_number">Number of cutting</label>
+            <label for="cut_number">Number of Cutting Passes</label>
         </fieldset>
         <fieldset>
             <legend>Cut</legend>
