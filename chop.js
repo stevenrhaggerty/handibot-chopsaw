@@ -228,10 +228,6 @@ function draw() {
     var vtp = 0;  //Value To Pixel
     var margin = 10;
     var bottom = parseInt(canvas.height) - margin; //To have the y go up and (0,0) is in the bottom left corner
-    var xFront, yFront, xBack, yBack; //For the front and back edges
-    var halfBit;  //The half of the bit diameter
-    var shift = 0, rise = 0; //hence representation of the mitter when angle > 0 and cut position on the right
-
     var cutPath = findCutPath();
     var bitPath = findBitPath(cutPath);
 
