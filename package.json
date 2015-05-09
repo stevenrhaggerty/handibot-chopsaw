@@ -2,7 +2,7 @@
 	"name":"Chop Saw",
 	"main":"./index.html",
 	"icon":"icon.png",
-	"icon_color":"grey",
+	"icon_color":"green",
 	"version":"0.0.1",
 	"author":"Alex",
 	"target":["3d_printer","router","laser_cutter"],
