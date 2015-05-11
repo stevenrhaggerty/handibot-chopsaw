@@ -110,7 +110,8 @@ function generateGCode() {
 
     gcode += "M8 (Spindle off)\n"
     gcode += "(Go to the initial position)\n";
-    gcode += "G0 X" + bitPath.start.x.toFixed(5) + " Y" + bitPath.start.y.toFixed(5) + "\n";
+    // gcode += "G0 X" + bitPath.start.x.toFixed(5) + " Y" + bitPath.start.y.toFixed(5) + "\n";
+    gcode += "G0 X0Y0\n";
 
     // gCode += "G40 (Tool Radius Compensation: off)\n";
     // gCode += "G49 (Tool Length Offset Compensation: off)\n";
@@ -415,7 +416,22 @@ function initialize() {
     });
 
     document.getElementById("make").addEventListener("click", function(e) {
-        alert(generateGCode());
+        var gcode = generateGCode();
+        console.log("GCode generated:");
+        console.log(gcode);
+        alert(gcode);
+        if(dashboard.machine) {
+            //XXX: it seems to have a bug in the templates:
+            //From the app_opensbpgenerator:
+            // dashboard.machine.gcode(program, function(err) {
+            //From the app_gcodegenerator:
+            // dashboard.machine.sbp(gcode, function(err) {
+            // I (Alex) think the code was swap
+            dashboard.machine.gcode(program, function(err) {
+                if(err)
+                    console.log(err);
+            });
+        }
     });
 }
 
