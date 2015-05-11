@@ -73,6 +73,7 @@ function findBitPath(cutPath) {
  */
 function generateGCode() {
     var gcode = "";
+    var z = 0.0;
 
     //check all the input
     checkFloat(bitDiameter);
@@ -85,12 +86,10 @@ function generateGCode() {
     checkFloat(cutHeight);
     checkFloat(cutNumber);
 
-    // var xStart = parseFloat(backLength.value).toFixed(5).toString();
-    // var yStart = parseFloat(boardLength.value).toFixed(5).toString();
-    // var xEnd = parseFloat(frontLength.value).toFixed(5).toString();
-    // var yEnd = "0";
     var bitPath = findBitPath(findCutPath());
-    var zEnd = (parseFloat(boardThickness.value)-parseFloat(safeZ.value)).toFixed(5).toString();
+    // var zEnd = (parseFloat(boardThickness.value)-parseFloat(cutHeight.value)).toFixed(5);
+    var zEnd = parseFloat(cutHeight.value) - parseFloat(boardThickness.value);
+    var bitZ = parseFloat(safeZ.value);
 
     gcode += "(Cutting straight)\n";
     if(document.getElementById("unit_in").checked == true)
@@ -99,14 +98,23 @@ function generateGCode() {
         gcode += "G21 (millimeters)\n";
     
     //TODO: see if it's good
-    gcode += "(Go to the initial position)\n";
+    gcode += "(Go to the start cut position)\n";
     gcode += "G0 X" + bitPath.start.x.toFixed(5) + " Y" + bitPath.start.y.toFixed(5) + "\n";
 
     gcode += "M3 (Spindle on clock wise)\n";
     gcode += "(Make the cut)\n";
-    gcode += "G1 Z" + zEnd + "\n";
-    gcode += "G1 X" + bitPath.end.x.toFixed(5) + " Y" + bitPath.end.y.toFixed(5) + "\n";
-    gcode += "G1 Z0\n";
+
+    //Have to do multiple passes because of the height of the bit
+    do {
+        z -= bitZ;
+        if(z < zEnd)
+            z = zEnd;
+        gcode += "G1 Z" + z.toFixed(5) + "\n";
+        gcode += "G1 X" + bitPath.end.x.toFixed(5) + " Y" + bitPath.end.y.toFixed(5) + "\n";
+        gcode += "G1 Z0\n";
+        gcode += "(Go to the start cut position)\n";
+        gcode += "G1 X" + bitPath.start.x.toFixed(5) + " Y" + bitPath.start.y.toFixed(5) + "\n";
+    } while(z > zEnd);
 
     gcode += "M8 (Spindle off)\n"
     gcode += "(Go to the initial position)\n";

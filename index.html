@@ -9,13 +9,13 @@
 <body>
     <p id="show_explanations">Click here to show/hide the explanations.</p>
     <div id="explanations">
-        <p>This app is used to cut a board as would do a Chop Saw or a Miter Saw. If an input is not a number, it will be converted as zero or the most close number.</p>
+        <p>This app is used to cut a board as would do a Chop Saw or a Miter Saw. If an input is not a number, it will be converted as zero or the most close number. The representation is the representation of the board. From the left tot the right is the X axis (the length), from the top to bottom is the Y axis (the width). Set the zero to the left corner of the board.</p>
         <h3>Settings</h3>
         <ul>
-            <li><strong>Unit</strong>: Chose the unit used.</li>
-            <li><strong>Pixels for an inch</strong>: Chose how much pixel represents an inch on the screen.</li>
-            <li><strong>Bit Diameter</strong>: The diameter of the bit of the machine.</li>
-            <li><strong>Safe Z</strong>: the height between the board support and the lower bit position.</li>
+            <li><strong>Unit</strong>: chose the unit used.</li>
+            <li><strong>Pixels for an inch</strong>: chose how much pixel represents an inch on the screen.</li>
+            <li><strong>Bit Diameter</strong>: the diameter of the bit of the machine.</li>
+            <li><strong>Safe Z</strong>: the height of the bit.</li>
         </ul>
         <h3>Miter</h3>
         <ul>
@@ -29,7 +29,7 @@
             <li><strong>Cut length (front edge)</strong>: the length of the front edge after the cut (represented on the bottom in green).</li>
             <li><strong>Reverse the cut direction</strong>: chose if this is the front edge or the back edge which is modified.</li>
             <li><strong>Board thickness</strong>: the board thickness.</li>
-            <li><strong>Cut height (from tabletop)</strong>: the cut height.</li>
+            <li><strong>Cut height (from tabletop)</strong>: the cut height from the tabletop on which the board is.</li>
             <li><strong>Number of Cutting Passes</strong>: the number of cutting passes the machine will do.</li>
         </ul>
         <h3>Cut</h3>
@@ -46,10 +46,10 @@
             <input id="in_to_px" type="text" name="in_to_px" value="10" />
             <label for="in_to_px">Pixels for an inch</label>
             <br />
-            <input id="bit_diameter" type="text" name="bit_diameter" value=".5" />
+            <input id="bit_diameter" type="text" name="bit_diameter" value="0.5" />
             <label for="bit_diameter">Bit Diameter</label>
             <br />
-            <input id="safe_z" type="text" name="safe_z" value=".5" />
+            <input id="safe_z" type="text" name="safe_z" value="0.5" />
             <label for="safe_z">Safe Z</label>
         </fieldset>
         <fieldset>
@@ -76,7 +76,7 @@
             <br />
             <button id="reverse" type="button">Reverse the cut direction</button>
             <br />
-            <input id="board_thickness" type="text" name="board_thickness" value=".75" />
+            <input id="board_thickness" type="text" name="board_thickness" value="0.75" />
             <label for="board_thickness">Board thickness</label>
             <br />
             <input id="cut_height" type="text" name="cut_height" value="0.00" />
