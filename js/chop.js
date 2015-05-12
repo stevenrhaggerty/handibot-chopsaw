@@ -352,6 +352,19 @@ function initialize() {
             explanations.style.display = "none";
     }, false);
 
+    //Show preview
+    document.getElementById("draw").addEventListener("click", function(event) {
+        preview = document.getElementById("preview");
+        if(preview.style.display == "none" || preview.style.display == "") {
+            this.innerHTML = "Hide preview";
+            preview.style.display = "block";
+        }
+        else {
+            this.innerHTML = "Show preview";
+            preview.style.display = "none";
+        }
+    }, false);
+
 
     //Settings part
     //The conversion

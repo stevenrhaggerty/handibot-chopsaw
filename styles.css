@@ -21,3 +21,5 @@ form { float: left; border: 1px solid black; margin: 3px; }
     margin-bottom: 3px;
     display: none;
 }
+
+#preview { display: none; }
