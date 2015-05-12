@@ -1,5 +1,6 @@
 //Global variables definition (initialized in the function "initialize"):
 var bitDiameter;
+var bitLength;
 var safeZ;
 var angle;
 var boardLength;
@@ -7,7 +8,6 @@ var backLength;
 var frontLength;
 var boardThickness;
 var cutHeight;
-var cutNumber;
 var canvas;
 var ctx;
 var cutBack = true;
@@ -18,8 +18,6 @@ var cutBack = true;
  */
 function findCutPath() {
     var path = {start : {}, end : {}};
-    // path.start = {};
-    // path.end = {};
 
     if(cutBack)
         calculateFrontLength();
@@ -77,6 +75,7 @@ function generateGCode() {
 
     //check all the input
     checkFloat(bitDiameter);
+    checkFloat(bitLength);
     checkFloat(safeZ);
     checkFloat(angle);
     checkFloat(boardLength);
@@ -84,12 +83,11 @@ function generateGCode() {
     checkFloat(frontLength);
     checkFloat(boardThickness);
     checkFloat(cutHeight);
-    checkFloat(cutNumber);
 
     var bitPath = findBitPath(findCutPath());
     // var zEnd = (parseFloat(boardThickness.value)-parseFloat(cutHeight.value)).toFixed(5);
     var zEnd = parseFloat(cutHeight.value) - parseFloat(boardThickness.value);
-    var bitHeight = 10; //TODO: change this for a real value
+    var bitL = parseFloat(bitLength.value);
     var safe = parseFloat(safeZ.value);
 
     gcode += "(Cutting straight)\n";
@@ -108,7 +106,7 @@ function generateGCode() {
 
     //Have to do multiple passes because of the height of the bit
     do {
-        z -= bitHeight;
+        z -= bitL;
         if(z < zEnd)
             z = zEnd;
         gcode += "(One pass)\n";
@@ -326,6 +324,7 @@ function draw() {
  */
 function initialize() {
     bitDiameter= document.getElementById("bit_diameter");
+    bitLength= document.getElementById("bit_length");
     safeZ = document.getElementById("safe_z");
     angle = document.getElementById("angle");
     boardLength = document.getElementById("board_length");
@@ -333,7 +332,6 @@ function initialize() {
     frontLength = document.getElementById("front_length");
     boardThickness = document.getElementById("board_thickness");
     cutHeight = document.getElementById("cut_height");
-    cutNumber = document.getElementById("cut_number");
 
     canvas = document.getElementById("canvas");
     canvas.height = document.getElementById("form_chop").clientHeight;
@@ -359,6 +357,7 @@ function initialize() {
     //The conversion
     document.getElementById("unit_in").addEventListener("change", function(event) {
         bitDiameter.value    = convertMmToIn(bitDiameter.value);
+        bitLength.value      = convertMmToIn(bitLength.value);
         safeZ.value          = convertMmToIn(safeZ.value);
         boardLength.value    = convertMmToIn(boardLength.value);
         backLength.value     = convertMmToIn(backLength.value);
@@ -369,6 +368,7 @@ function initialize() {
 
     document.getElementById("unit_mm").addEventListener("change", function(event) {
         bitDiameter.value    = convertInToMm(bitDiameter.value);
+        bitLength.value      = convertInToMm(bitLength.value);
         safeZ.value          = convertInToMm(safeZ.value);
         boardLength.value    = convertInToMm(boardLength.value);
         backLength.value     = convertInToMm(backLength.value);

@@ -10,11 +10,15 @@
     <p id="show_explanations">Click here to show/hide the explanations.</p>
     <div id="explanations">
         <p>This app is used to cut a board as would do a Chop Saw or a Miter Saw. If an input is not a number, it will be converted as zero or the most close number. The representation is the representation of the board. From the left tot the right is the X axis (the length), from the top to bottom is the Y axis (the width). Set the zero to the left corner of the board.</p>
-        <h3>Settings</h3>
+        <h3>General settings</h3>
         <ul>
             <li><strong>Unit</strong>: chose the unit used.</li>
-            <li><strong>Pixels for an inch</strong>: chose how much pixel represents an inch on the screen.</li>
+            <li><strong>Pixels for an inch</strong>: chose how much pixels represent an inch on the screen (this has no incidence on the final work).</li>
             <li><strong>Bit Diameter</strong>: the diameter of the bit of the machine.</li>
+        </ul>
+        <h3>Bit settings</h3>
+        <ul>
+            <li><strong>Bit Length</strong>: the cut length of the bit of the machine (must be equal of below the real length).</li>
             <li><strong>Safe Z</strong>: height above the board and the bit during the motion.</li>
         </ul>
         <h3>Miter</h3>
@@ -30,7 +34,6 @@
             <li><strong>Reverse the cut direction</strong>: chose if this is the front edge or the back edge which is modified.</li>
             <li><strong>Board thickness</strong>: the board thickness.</li>
             <li><strong>Cut height (from tabletop)</strong>: the cut height from the tabletop on which the board is.</li>
-            <li><strong>Number of Cutting Passes</strong>: the number of cutting passes the machine will do.</li>
         </ul>
         <h3>Cut</h3>
         Chose if the miter passes on the center of the cut or on its right.
@@ -46,11 +49,16 @@
             <input id="in_to_px" type="text" name="in_to_px" value="10" />
             <label for="in_to_px">Pixels for an inch</label>
             <br />
+            <input id="safe_z" type="text" name="safe_z" value="0.5" />
+            <label for="safe_z">Safe Z</label>
+        </fieldset>
+        <fieldset>
+            <legend>Bit settings</legend>
             <input id="bit_diameter" type="text" name="bit_diameter" value="0.5" />
             <label for="bit_diameter">Bit Diameter</label>
             <br />
-            <input id="safe_z" type="text" name="safe_z" value="0.5" />
-            <label for="safe_z">Safe Z</label>
+            <input id="bit_length" type="text" name="bit_length" value="0.5" />
+            <label for="bit_length">Bit Length</label>
         </fieldset>
         <fieldset>
             <legend>Miter</legend>
@@ -81,9 +89,6 @@
             <br />
             <input id="cut_height" type="text" name="cut_height" value="0.00" />
             <label for="cut_height">Cut height (from tabletop)</label>
-            <br />
-            <input id="cut_number" type="text" name="cut_number" value="1" />
-            <label for="cut_number">Number of Cutting Passes</label>
         </fieldset>
         <fieldset>
             <legend>Cut</legend>
