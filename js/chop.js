@@ -428,21 +428,7 @@ function initialize() {
 
     document.getElementById("make").addEventListener("click", function(e) {
         var gcode = generateGCode();
-        console.log("GCode generated:");
-        console.log(gcode);
-        alert(gcode);
-        if(dashboard.machine) {
-            //XXX: it seems to have a bug in the templates:
-            //From the app_opensbpgenerator:
-            // dashboard.machine.gcode(program, function(err) {
-            //From the app_gcodegenerator:
-            // dashboard.machine.sbp(gcode, function(err) {
-            // I (Alex) think the code was swap
-            dashboard.machine.gcode(program, function(err) {
-                if(err)
-                    console.log(err);
-            });
-        }
+        fabmoDashboard.submitJob(gcode, {filename : 'chop.nc'});
     });
 }
 
