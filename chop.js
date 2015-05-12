@@ -89,7 +89,8 @@ function generateGCode() {
     var bitPath = findBitPath(findCutPath());
     // var zEnd = (parseFloat(boardThickness.value)-parseFloat(cutHeight.value)).toFixed(5);
     var zEnd = parseFloat(cutHeight.value) - parseFloat(boardThickness.value);
-    var bitZ = parseFloat(safeZ.value);
+    var bitHeight = 10; //TODO: change this for a real value
+    var safe = parseFloat(safeZ.value);
 
     gcode += "(Cutting straight)\n";
     if(document.getElementById("unit_in").checked == true)
@@ -99,6 +100,7 @@ function generateGCode() {
     
     //TODO: see if it's good
     gcode += "(Go to the start cut position)\n";
+    gcode += "G0 Z" + safe.toFixed(5) + "\n";
     gcode += "G0 X" + bitPath.start.x.toFixed(5) + " Y" + bitPath.start.y.toFixed(5) + "\n";
 
     gcode += "M3 (Spindle on clock wise)\n";
@@ -106,20 +108,21 @@ function generateGCode() {
 
     //Have to do multiple passes because of the height of the bit
     do {
-        z -= bitZ;
+        z -= bitHeight;
         if(z < zEnd)
             z = zEnd;
+        gcode += "(One pass)\n";
         gcode += "G1 Z" + z.toFixed(5) + "\n";
         gcode += "G1 X" + bitPath.end.x.toFixed(5) + " Y" + bitPath.end.y.toFixed(5) + "\n";
-        gcode += "G1 Z0\n";
         gcode += "(Go to the start cut position)\n";
-        gcode += "G1 X" + bitPath.start.x.toFixed(5) + " Y" + bitPath.start.y.toFixed(5) + "\n";
+        gcode += "G1 Z" + safe.toFixed(5) + "\n";
+        gcode += "G0 X" + bitPath.start.x.toFixed(5) + " Y" + bitPath.start.y.toFixed(5) + "\n";
     } while(z > zEnd);
 
     gcode += "M8 (Spindle off)\n"
     gcode += "(Go to the initial position)\n";
     // gcode += "G0 X" + bitPath.start.x.toFixed(5) + " Y" + bitPath.start.y.toFixed(5) + "\n";
-    gcode += "G0 X0Y0\n";
+    gcode += "G0 X0 Y0\n";
 
     // gCode += "G40 (Tool Radius Compensation: off)\n";
     // gCode += "G49 (Tool Length Offset Compensation: off)\n";
