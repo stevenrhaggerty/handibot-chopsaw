@@ -2,110 +2,125 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="text/javascript" src="js/modernizr.js"></script>
     <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/foundation.min.js"></script>
     <script type="text/javascript" src="js/dashboard.js"></script>
     <script type="text/javascript" src="js/chop.js"></script>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="css/foundation.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
     <title>Chop Saw App</title>
 </head>
 <body>
-    <p id="show_explanations">Click here to show/hide the explanations.</p>
-    <div id="explanations">
-        <p>This app is used to cut a board as would do a Chop Saw or a Miter Saw. If an input is not a number, it will be converted as zero or the most close number. The representation is the representation of the board. From the left tot the right is the X axis (the length), from the top to bottom is the Y axis (the width). Set the zero to the left corner of the board.</p>
-        <h3>General settings</h3>
-        <ul>
-            <li><strong>Unit</strong>: chose the unit used.</li>
-            <li><strong>Pixels for an inch</strong>: chose how much pixels represent an inch on the screen (this has no incidence on the final work).</li>
-            <li><strong>Bit Diameter</strong>: the diameter of the bit of the machine.</li>
-        </ul>
-        <h3>Bit settings</h3>
-        <ul>
-            <li><strong>Bit Length</strong>: the cut length of the bit of the machine (must be equal of below the real length).</li>
-            <li><strong>Safe Z</strong>: height above the board and the bit during the motion.</li>
-        </ul>
-        <h3>Miter</h3>
-        <ul>
-            <li><strong>Miter angle</strong>: the angle of the miter.</li>
-            <li><strong>Tilt</strong>: the direction of the tilt.</li>
-        </ul>
-        <h3>Board</h3>
-        <ul>
-            <li><strong>Board length</strong>: the board length.</li>
-            <li><strong>Cut length (back edge)</strong>: the length of the back edge after the cut (represented on the top in blue).</li>
-            <li><strong>Cut length (front edge)</strong>: the length of the front edge after the cut (represented on the bottom in green).</li>
-            <li><strong>Reverse the cut direction</strong>: chose if this is the front edge or the back edge which is modified.</li>
-            <li><strong>Board thickness</strong>: the board thickness.</li>
-            <li><strong>Cut height (from tabletop)</strong>: the cut height from the tabletop on which the board is.</li>
-        </ul>
-        <h3>Cut</h3>
-        Chose if the miter passes on the center of the cut or on its right.
+    <div class=row>
+        <p id="show_explanations">Click here to show/hide the explanations.</p>
+        <div class="large-12 columns" id="explanations">
+            <p>This app is used to cut a board as would do a Chop Saw or a Miter Saw. If an input is not a number, it will be converted as zero or the most close number. The representation is the representation of the board. From the left tot the right is the X axis (the length), from the top to bottom is the Y axis (the width). Set the zero to the left corner of the board.</p>
+            <h3>General settings</h3>
+            <ul>
+                <li><strong>Unit</strong>: chose the unit used.</li>
+                <li><strong>Pixels for an inch</strong>: chose how much pixels represent an inch on the screen (this has no incidence on the final work).</li>
+                <li><strong>Bit Diameter</strong>: the diameter of the bit of the machine.</li>
+            </ul>
+            <h3>Bit settings</h3>
+            <ul>
+                <li><strong>Bit Length</strong>: the cut length of the bit of the machine (must be equal of below the real length).</li>
+                <li><strong>Safe Z</strong>: height above the board and the bit during the motion.</li>
+            </ul>
+            <h3>Miter</h3>
+            <ul>
+                <li><strong>Miter angle</strong>: the angle of the miter.</li>
+                <li><strong>Tilt</strong>: the direction of the tilt.</li>
+            </ul>
+            <h3>Board</h3>
+            <ul>
+                <li><strong>Board length</strong>: the board length.</li>
+                <li><strong>Cut length (back edge)</strong>: the length of the back edge after the cut (represented on the top in blue).</li>
+                <li><strong>Cut length (front edge)</strong>: the length of the front edge after the cut (represented on the bottom in green).</li>
+                <li><strong>Reverse the cut direction</strong>: chose if this is the front edge or the back edge which is modified.</li>
+                <li><strong>Board thickness</strong>: the board thickness.</li>
+                <li><strong>Cut height (from tabletop)</strong>: the cut height from the tabletop on which the board is.</li>
+            </ul>
+            <h3>Cut</h3>
+            Choose if the miter passes on the center of the cut or on its right.
+        </div>
     </div>
-    <form id="form_chop" action="">
-        <fieldset>
-            <legend>Settings</legend>
-            <input id="unit_in" type="radio" name="unit" value="in" checked />
-            <label for="unit_in">Inches</label>
-            <input id="unit_mm" type="radio" name="unit" value="mm" />
-            <label for="unit_mm">Millimeters</label>
+    <div class="row">
+        <div class="large-4 columns">
+            <form id="form_chop" action="">
+                <fieldset>
+                    <legend>Settings</legend>
+                    <input id="unit_in" type="radio" name="unit" value="in" checked />
+                    <label for="unit_in">Inches</label>
+                    <input id="unit_mm" type="radio" name="unit" value="mm" />
+                    <label for="unit_mm">Millimeters</label>
+                    <br />
+                    <input id="safe_z" type="text" name="safe_z" value="0.5" />
+                    <label for="safe_z">Safe Z</label>
+                </fieldset>
+                <fieldset>
+                    <legend>Bit settings</legend>
+                    <input id="bit_diameter" type="text" name="bit_diameter" value="0.5" />
+                    <label for="bit_diameter">Bit Diameter</label>
+                    <br />
+                    <input id="bit_length" type="text" name="bit_length" value="0.5" />
+                    <label for="bit_length">Bit Length</label>
+                </fieldset>
+                <fieldset>
+                    <legend>Miter</legend>
+                    <input id="angle" type="text" name="angle" value="0" />
+                    <label for="angle">Miter angle</label>
+                    <br />
+                    <input id="tilt_right" type="radio" name="tilt" value="right" checked />
+                    <label for="tilt_right">Tilt the miter to the right</label>
+                    <br />
+                    <input id="tilt_left" type="radio" name="tilt" value="left" />
+                    <label for="tilt_left">Tilt the miter to the left</label>
+                </fieldset>
+                <fieldset>
+                    <legend>Board</legend>
+                    <input id="board_length" type="text" name="board_length" value="10" />
+                    <label for="board_length">Board length</label>
+                    <br />
+                    <input id="back_length" type="text" name="back_length" value="20" />
+                    <label class="blue" for="back_length">Cut length (back edge)</label>
+                    <br />
+                    <input id="front_length" type="text" name="front_length" value="20" />
+                    <label class="green" for="front_length">Cut length (front edge)</label>
+                    <br />
+                    <button id="reverse" type="button">Reverse the cut direction</button>
+                    <br />
+                    <input id="board_thickness" type="text" name="board_thickness" value="0.75" />
+                    <label for="board_thickness">Board thickness</label>
+                    <br />
+                    <input id="cut_height" type="text" name="cut_height" value="0.00" />
+                    <label for="cut_height">Cut height (from tabletop)</label>
+                </fieldset>
+                <fieldset>
+                    <legend>Cut</legend>
+                    <input id="cut_pos_right" type="radio" name="cut_pos" value="right" checked />
+                    <label for="cut_pos_right">Cut to the right of the line</label>
+                    <br />
+                    <input id="cut_pos_center" type="radio" name="cut_pos" value="center" />
+                    <label for="cut_pos_center">Cut on center of the line</label>
+                    <br />
+                    <button id="draw" type="button">Show preview</button>
+                    <button id="make" type="button">Make the cut</button>
+                </fieldset>
+            </form>
+        </div>
+
+        <div class="large-8 columns" id="preview">
+            <input id="in_to_px" type="text" name="in_to_px" value="10" />
+            <label for="in_to_px">Pixels for an inch</label>
             <br />
-            <input id="safe_z" type="text" name="safe_z" value="0.5" />
-            <label for="safe_z">Safe Z</label>
-        </fieldset>
-        <fieldset>
-            <legend>Bit settings</legend>
-            <input id="bit_diameter" type="text" name="bit_diameter" value="0.5" />
-            <label for="bit_diameter">Bit Diameter</label>
-            <br />
-            <input id="bit_length" type="text" name="bit_length" value="0.5" />
-            <label for="bit_length">Bit Length</label>
-        </fieldset>
-        <fieldset>
-            <legend>Miter</legend>
-            <input id="angle" type="text" name="angle" value="0" />
-            <label for="angle">Miter angle</label>
-            <br />
-            <input id="tilt_right" type="radio" name="tilt" value="right" checked />
-            <label for="tilt_right">Tilt the miter to the right</label>
-            <br />
-            <input id="tilt_left" type="radio" name="tilt" value="left" />
-            <label for="tilt_left">Tilt the miter to the left</label>
-        </fieldset>
-        <fieldset>
-            <legend>Board</legend>
-            <input id="board_length" type="text" name="board_length" value="10" />
-            <label for="board_length">Board length</label>
-            <br />
-            <input id="back_length" type="text" name="back_length" value="20" />
-            <label class="blue" for="back_length">Cut length (back edge)</label>
-            <br />
-            <input id="front_length" type="text" name="front_length" value="20" />
-            <label class="green" for="front_length">Cut length (front edge)</label>
-            <br />
-            <button id="reverse" type="button">Reverse the cut direction</button>
-            <br />
-            <input id="board_thickness" type="text" name="board_thickness" value="0.75" />
-            <label for="board_thickness">Board thickness</label>
-            <br />
-            <input id="cut_height" type="text" name="cut_height" value="0.00" />
-            <label for="cut_height">Cut height (from tabletop)</label>
-        </fieldset>
-        <fieldset>
-            <legend>Cut</legend>
-            <input id="cut_pos_right" type="radio" name="cut_pos" value="right" checked />
-            <label for="cut_pos_right">Cut to the right of the line</label>
-            <br />
-            <input id="cut_pos_center" type="radio" name="cut_pos" value="center" />
-            <label for="cut_pos_center">Cut on center of the line</label>
-            <br />
-            <button id="draw" type="button">Show preview</button>
-            <button id="make" type="button">Make the cut</button>
-        </fieldset>
-    </form>
-    <div id="preview">
-        <input id="in_to_px" type="text" name="in_to_px" value="10" />
-        <label for="in_to_px">Pixels for an inch</label>
-        <br />
-        <canvas id="canvas" width="300" height="300"></canvas>
+            <canvas id="canvas" width="300" height="300"></canvas>
+        </div>
     </div>
+
+    <script>
+        $(document).foundation();
+    </script>
 </body>
 </html>

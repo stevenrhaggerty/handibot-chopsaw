@@ -4,9 +4,9 @@
 
 input[type="text"] { width: 80px; }
 
-canvas { border: 1px solid black; margin: 3px; }
+canvas { border: 1px solid black; margin-top: 3px; }
 
-form { float: left; border: 1px solid black; margin: 3px; }
+form { float: left; border: 1px solid black; }
 
 #show_explanations {
     margin: 2px; 

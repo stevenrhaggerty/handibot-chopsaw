@@ -335,7 +335,7 @@ function initialize() {
 
     canvas = document.getElementById("canvas");
     canvas.height = document.getElementById("form_chop").clientHeight;
-    canvas.width = parseInt(document.getElementById("form_chop").clientWidth)*2;
+    // canvas.width = parseInt(document.getElementById("form_chop").clientWidth)*2;
     ctx = canvas.getContext("2d");
 
     frontLength.disabled = cutBack;
