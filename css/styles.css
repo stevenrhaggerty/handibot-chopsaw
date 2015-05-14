@@ -2,11 +2,11 @@
 
 .green { color: green; }
 
-/* input[type="text"] { width: 80px; } */
+canvas { border: 1px solid #ddd; }
 
-canvas { border: 1px solid black; }
+/* input[type="text"] { min-width: 80px; } */
 
-form { border: 1px solid black; margin-bottom: 0.2em; }
+form { border: 1px solid #ddd; margin-bottom: 0.2em; }
 
 #show_explanations {
     margin: 2px; 

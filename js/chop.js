@@ -1,13 +1,9 @@
 //Global variables definition (initialized in the function "initialize"):
-var bitDiameter;
-var bitLength;
 var safeZ;
+var bitDiameter, bitLength;
 var angle;
-var boardLength;
-var backLength;
-var frontLength;
-var boardThickness;
-var cutHeight;
+var boardLength, backLength, frontLength;
+var boardThickness, cutHeight;
 var canvas;
 var ctx;
 var cutBack = true;
@@ -110,10 +106,9 @@ function generateGCode() {
     checkFloat(cutHeight);
 
     var bitPath = findBitPath(findCutPath());
-    // var zEnd = (parseFloat(boardThickness.val())-parseFloat(cutHeight.val())).toFixed(5);
     var zEnd = parseFloat(cutHeight.val()) - parseFloat(boardThickness.val());
     var bitL = parseFloat(bitLength.val());
-    var safe = parseFloat(safeZ.value);
+    var safe = parseFloat(safeZ.val());
 
     gcode += "(Cutting straight)\n";
     if($("#unit_in").prop("checked") == true)
@@ -142,20 +137,10 @@ function generateGCode() {
         gcode += "G0 X" + bitPath.start.x.toFixed(5) + " Y" + bitPath.start.y.toFixed(5) + "\n";
     } while(z > zEnd);
 
-    gcode += "M8 (Spindle off)\n"
+    gcode += "M8 (Spindle off)\n";
+    //The Z position is already correct
     gcode += "(Go to the initial position)\n";
-    // gcode += "G0 X" + bitPath.start.x.toFixed(5) + " Y" + bitPath.start.y.toFixed(5) + "\n";
     gcode += "G0 X0 Y0\n";
-
-    // gCode += "G40 (Tool Radius Compensation: off)\n";
-    // gCode += "G49 (Tool Length Offset Compensation: off)\n";
-    // gCode += "G54 (Work Coordinate System)\n";
-    // gCode += "G80 (Cancel Canned Cycle)\n";
-    // gCode += "G90 (Absolute programming)\n";
-    // // gCode += "G94 (Feedrate per minute)\n";
-    //     gCode += "G0 Z1.0(seek to z = 1)\n"; 
-    // // gCode += "F" + feedrate + " (Feedrate - in inches per minute)\n";
-    //     gCode += "G00 X" + leftX + " Y" + midY + " Z1.0\n";
 
     return gcode;
 }
@@ -171,7 +156,6 @@ function checkFloat(element) {
     else
         element.val(parseFloat(element.val()));
 }
-
 
 /**
  * Converts inches into millimeters.
@@ -461,6 +445,8 @@ function initialize() {
         var gcode = generateGCode();
         fabmoDashboard.submitJob(gcode, {filename : 'chop.nc'});
     });
+
+    $(window).bind("resize", draw);
 }
 
 window.onload = initialize;
