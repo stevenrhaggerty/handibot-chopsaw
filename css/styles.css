@@ -4,8 +4,6 @@
 
 canvas { border: 1px solid #ddd; }
 
-/* input[type="text"] { min-width: 80px; } */
-
 form { border: 1px solid #ddd; margin-bottom: 0.2em; }
 
 #show_explanations {
@@ -16,20 +14,14 @@ form { border: 1px solid #ddd; margin-bottom: 0.2em; }
 }
 
 #explanations {
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
     margin-bottom: 3px;
     display: none;
+    text-align: justify;
 }
 
 fieldset {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-div {
     margin-top: 0;
     margin-bottom: 0;
     padding-top: 0;
