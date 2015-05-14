@@ -145,23 +145,31 @@
                     <br />
                     <input id="cut_pos_center" type="radio" name="cut_pos" value="center" />
                     <label for="cut_pos_center">Cut on center of the line</label>
-                    <br />
-                    <button id="draw" type="button" class="hide-for-medium-up">Show preview</button>
-                    <button id="make" type="button">Make the cut</button>
                 </fieldset>
             </form>
         </div>
 
         <div class="large-8 columns" id="preview">
-            <div class="show-for-medium-up">
-                <input id="in_to_px" type="text" name="in_to_px" value="10" />
-                <label for="in_to_px">Pixels for an inch</label>
-                <br />
-                <canvas id="canvas" width="300" height="300"></canvas>
+                <div class="row">
+                    <div class="small-12 columns">
+                        <canvas id="canvas" height="300"></canvas>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-2 columns">
+                        <input id="in_to_px" type="text" name="in_to_px" value="10" />
+                    </div>
+                    <div class="small-10 columns">
+                        <label class="left inline" for="in_to_px">Pixels for an inch</label>
+                    </div>
+                </div>
             </div>
+    </div>
+    <div class="row">
+        <div class="small-12 columns">
+            <button id="make" type="button">Make the cut</button>
         </div>
     </div>
-
     <script>
 $(document).foundation();
     </script>
