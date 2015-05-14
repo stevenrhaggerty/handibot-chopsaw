@@ -18,7 +18,7 @@ var margin = 10;  //Margin in the canvas
  *
  */
 function changeCanvasHeight() {
-    var height = parseFloat(document.getElementById("board_length").value) * getValueToPixel() + 2 * margin;
+    var height = parseFloat($("#board_length").val()) * getValueToPixel() + 2 * margin;
     canvas.height = (height < 600) ? height : 600;
 }
 
@@ -34,10 +34,10 @@ function findCutPath() {
     else
         calculateBackLength();
 
-    path.start.x = parseFloat(frontLength.value);
+    path.start.x = parseFloat(frontLength.val());
     path.start.y = 0;
-    path.end.x = parseFloat(backLength.value);
-    path.end.y = parseFloat(boardLength.value);
+    path.end.x = parseFloat(backLength.val());
+    path.end.y = parseFloat(boardLength.val());
 
     return path;
 }
@@ -54,13 +54,13 @@ function findBitPath(cutPath) {
         end : {x : cutPath.end.x, y : cutPath.end.y}
     };
 
-    if(document.getElementById("cut_pos_right").checked == true) {
+    if($("#cut_pos_right").prop("checked") == true) {
         checkFloat(bitDiameter);
-        halfBit = (parseFloat(bitDiameter.value)) / 2;
+        halfBit = (parseFloat(bitDiameter.val())) / 2;
 
-        shift = halfBit * Math.cos(parseFloat(angle.value)*Math.PI/180);
-        rise = halfBit * Math.sin(parseFloat(angle.value)*Math.PI/180);
-        if(document.getElementById("tilt_right").checked == true) {
+        shift = halfBit * Math.cos(parseFloat(angle.val())*Math.PI/180);
+        rise = halfBit * Math.sin(parseFloat(angle.val())*Math.PI/180);
+        if($("#tilt_right").prop("checked") == true) {
             rise *= -1;
         }
 
@@ -69,7 +69,6 @@ function findBitPath(cutPath) {
         path.end.x += shift;
         path.end.y += rise;
     }
-
 
     return path;
 }
@@ -95,13 +94,13 @@ function generateGCode() {
     checkFloat(cutHeight);
 
     var bitPath = findBitPath(findCutPath());
-    // var zEnd = (parseFloat(boardThickness.value)-parseFloat(cutHeight.value)).toFixed(5);
-    var zEnd = parseFloat(cutHeight.value) - parseFloat(boardThickness.value);
-    var bitL = parseFloat(bitLength.value);
+    // var zEnd = (parseFloat(boardThickness.val())-parseFloat(cutHeight.val())).toFixed(5);
+    var zEnd = parseFloat(cutHeight.val()) - parseFloat(boardThickness.val());
+    var bitL = parseFloat(bitLength.val());
     var safe = parseFloat(safeZ.value);
 
     gcode += "(Cutting straight)\n";
-    if(document.getElementById("unit_in").checked == true)
+    if($("#unit_in").prop("checked") == true)
         gcode += "G20 (inches)\n";
     else
         gcode += "G21 (millimeters)\n";
@@ -148,13 +147,13 @@ function generateGCode() {
 /**
  * Checks if an input text element contains a float. Corrects the element.
  *
- * @param {object} element Input text element to check.
+ * @param {object} element Jquery input text element to check.
  */
 function checkFloat(element) {
-    if(isNaN(parseFloat(element.value)))
-        element.value = 0;
+    if(isNaN(parseFloat(element.val())))
+        element.val(0);
     else
-        element.value = parseFloat(element.value);
+        element.val(parseFloat(element.val()));
 }
 
 
@@ -184,8 +183,8 @@ function convertMmToIn(millimeters) {
  * @return {number} The number of pixel for an inch.
  */
 function inchToPixel() {
-    checkFloat(document.getElementById("in_to_px"));
-    return parseFloat(document.getElementById("in_to_px").value);
+    checkFloat($("#in_to_px"));
+    return parseFloat($("#in_to_px").val());
 }
 
 /**
@@ -200,8 +199,8 @@ function calculateBackFrontDifference() {
     checkFloat(angle);
     checkFloat(boardLength);
 
-    a = parseFloat(angle.value);
-    b = parseFloat(boardLength.value);
+    a = parseFloat(angle.val());
+    b = parseFloat(boardLength.val());
 
     return Math.tan(parseFloat(a) * Math.PI/180) * parseFloat(b);
 }
@@ -216,10 +215,10 @@ function calculateBackLength() {
 
     checkFloat(frontLength);
 
-    if(document.getElementById("tilt_right").checked == true)
-        backLength.value = parseFloat(frontLength.value) + difference;
+    if($("#tilt_right").prop("checked") == true)
+        backLength.val(parseFloat(frontLength.val()) + difference);
     else
-        backLength.value = parseFloat(frontLength.value) - difference;
+        backLength.val(parseFloat(frontLength.val()) - difference);
 }
 
 /**
@@ -232,10 +231,10 @@ function calculateFrontLength() {
 
     checkFloat(backLength);
 
-    if(document.getElementById("tilt_right").checked == true)
-        frontLength.value = parseFloat(backLength.value) - difference;
+    if($("#tilt_right").prop("checked") == true)
+        frontLength.val(parseFloat(backLength.val()) - difference);
     else
-        frontLength.value = parseFloat(backLength.value) + difference;
+        frontLength.val(parseFloat(backLength.val()) + difference);
 }
 
 /**
@@ -244,7 +243,7 @@ function calculateFrontLength() {
  * @return {number} Returns the value to pixel
  */
 function getValueToPixel() {
-    if(document.getElementById("unit_in").checked == true)
+    if($("#unit_in").prop("checked") == true)
         return inchToPixel();
     else
         return convertMmToIn(inchToPixel());
@@ -301,7 +300,7 @@ function draw() {
     ctx.beginPath();
     ctx.moveTo(bitPath.start.x, bitPath.start.y);
     ctx.lineTo(bitPath.end.x, bitPath.end.y);
-    ctx.lineWidth = parseFloat(bitDiameter.value) * vtp;
+    ctx.lineWidth = parseFloat(bitDiameter.val()) * vtp;
     ctx.strokeStyle = "#FF0000";
     ctx.stroke();
 
@@ -337,112 +336,108 @@ function draw() {
  *
  */
 function initialize() {
-    bitDiameter= document.getElementById("bit_diameter");
-    bitLength= document.getElementById("bit_length");
-    safeZ = document.getElementById("safe_z");
-    angle = document.getElementById("angle");
-    boardLength = document.getElementById("board_length");
-    backLength = document.getElementById("back_length");
-    frontLength = document.getElementById("front_length");
-    boardThickness = document.getElementById("board_thickness");
-    cutHeight = document.getElementById("cut_height");
+    bitDiameter = $("#bit_diameter");
+    bitLength = $("#bit_length");
+    safeZ = $("#safe_z");
+    angle = $("#angle");
+    boardLength = $("#board_length");
+    backLength = $("#back_length");
+    frontLength = $("#front_length");
+    boardThickness = $("#board_thickness");
+    cutHeight = $("#cut_height");
 
+    //NOTE: Don't use JQuery for canvas  => it acts weird when changing height
     canvas = document.getElementById("canvas");
     changeCanvasHeight();
-    // canvas.height = document.getElementById("form_chop").clientHeight;
-    // canvas.width = parseInt(document.getElementById("form_chop").clientWidth)*2;
     ctx = canvas.getContext("2d");
 
-    frontLength.disabled = cutBack;
-    backLength.disabled = !cutBack;
+    frontLength.attr("disabled", cutBack);
+    backLength.attr("disabled", !cutBack);
 
     draw();
 
     //Explanations
-    document.getElementById("show_explanations").addEventListener("click", function(event) {
-        explanations = document.getElementById("explanations");
-        if(explanations.style.display == "none" || explanations.style.display == "")
-            explanations.style.display = "block";
-        else
-            explanations.style.display = "none";
-    }, false);
+    $("#show_explanations").click(function(event) {
+        $("#explanations").toggle();
+    });
 
     //Settings part
     //The conversion
-    document.getElementById("unit_in").addEventListener("change", function(event) {
-        bitDiameter.value    = convertMmToIn(bitDiameter.value);
-        bitLength.value      = convertMmToIn(bitLength.value);
-        safeZ.value          = convertMmToIn(safeZ.value);
-        boardLength.value    = convertMmToIn(boardLength.value);
-        backLength.value     = convertMmToIn(backLength.value);
-        frontLength.value    = convertMmToIn(frontLength.value);
-        boardThickness.value = convertMmToIn(boardThickness.value);
-        cutHeight.value      = convertMmToIn(cutHeight.value);
+    $("#unit_in").change(function(event) {
+        bitDiameter.val(convertMmToIn(bitDiameter.val()));
+        bitLength.val(convertMmToIn(bitLength.val()));
+        safeZ.val(convertMmToIn(safeZ.val()));
+        boardLength.val(convertMmToIn(boardLength.val()));
+        backLength.val(convertMmToIn(backLength.val()));
+        frontLength.val(convertMmToIn(frontLength.val()));
+        boardThickness.val(convertMmToIn(boardThickness.val()));
+        cutHeight.val(convertMmToIn(cutHeight.val()));
     }, false);
 
-    document.getElementById("unit_mm").addEventListener("change", function(event) {
-        bitDiameter.value    = convertInToMm(bitDiameter.value);
-        bitLength.value      = convertInToMm(bitLength.value);
-        safeZ.value          = convertInToMm(safeZ.value);
-        boardLength.value    = convertInToMm(boardLength.value);
-        backLength.value     = convertInToMm(backLength.value);
-        frontLength.value    = convertInToMm(frontLength.value);
-        boardThickness.value = convertInToMm(boardThickness.value);
-        cutHeight.value      = convertInToMm(cutHeight.value);
+    $("#unit_mm").change(function(event) {
+        bitDiameter.val(convertInToMm(bitDiameter.val()));
+        bitLength.val(convertInToMm(bitLength.val()));
+        safeZ.val(convertInToMm(safeZ.val()));
+        boardLength.val(convertInToMm(boardLength.val()));
+        backLength.val(convertInToMm(backLength.val()));
+        frontLength.val(convertInToMm(frontLength.val()));
+        boardThickness.val(convertInToMm(boardThickness.val()));
+        cutHeight.val(convertInToMm(cutHeight.val()));
     }, false);
 
-    document.getElementById("in_to_px").addEventListener("change", function(e) {
-        checkFloat(this);
+    $("#in_to_px").change(function(e) {
+        checkFloat($(this));
         changeCanvasHeight();
         draw();
     });
 
-    document.getElementById("bit_diameter").addEventListener("change", function(e) {
-        checkFloat(this);
+    $("#bit_diameter").change(function(e) {
+        checkFloat($(this));
         draw();
     });
 
     //The angle change
-    angle.addEventListener("change", function(e) {
-        checkFloat(this);
+    angle.change(function(e) {
+        checkFloat($(this));
         draw();
     });
-    document.getElementById("tilt_right").addEventListener("change", function(e) {
+    $("#tilt_right").change(function(e) {
         draw();
     });
-    document.getElementById("tilt_left").addEventListener("change", function(e) {
+    $("#tilt_left").change(function(e) {
         draw();
     });
 
     //The board change
-    document.getElementById("front_length").addEventListener("change", function(e) {
-        checkFloat(this);
+    $("#front_length").change(function(e) {
+        checkFloat($(this));
         draw();
     });
-    document.getElementById("back_length").addEventListener("change", function(e) {
-        checkFloat(this);
+    $("#back_length").change(function(e) {
+        checkFloat($(this));
         draw();
     });
-    document.getElementById("board_length").addEventListener("change", function(e) {
-        checkFloat(this);
+    $("#board_length").change(function(e) {
+        checkFloat($(this));
         changeCanvasHeight();
         draw();
     });
-    document.getElementById("reverse").addEventListener("click", function(e) {
+
+    $("#reverse").click(function(e) {
         cutBack = !cutBack;
-        frontLength.disabled = cutBack;
-        backLength.disabled = !cutBack;
+        frontLength.attr("disabled", cutBack);
+        backLength.attr("disabled", !cutBack);
     });
 
     //Cut position
-    document.getElementById("cut_pos_right").addEventListener("change", function(e) {
+    $("#cut_pos_right").change(function(e) {
         draw();
     });
-    document.getElementById("cut_pos_center").addEventListener("change", function(e) {
+    $("#cut_pos_center").change(function(e) {
         draw();
     });
 
-    document.getElementById("make").addEventListener("click", function(e) {
+    $("#make").click(function(e) {
         var gcode = generateGCode();
         fabmoDashboard.submitJob(gcode, {filename : 'chop.nc'});
     });
