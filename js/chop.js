@@ -11,6 +11,16 @@ var cutHeight;
 var canvas;
 var ctx;
 var cutBack = true;
+var margin = 10;  //Margin in the canvas
+
+/**
+ * Change the height of the canvas (according to the board length and inch to pixel.
+ *
+ */
+function changeCanvasHeight() {
+    var height = parseFloat(document.getElementById("board_length").value) * getValueToPixel() + 2 * margin;
+    canvas.height = (height < 600) ? height : 600;
+}
 
 /**
  * Finds the start and end position of the cut. Goes from the front to the back.
@@ -174,10 +184,8 @@ function convertMmToIn(millimeters) {
  * @return {number} The number of pixel for an inch.
  */
 function inchToPixel() {
-    var itp = parseFloat(document.getElementById("in_to_px").value);
-    if(isNaN(itp))
-        return 0;
-    return itp;
+    checkFloat(document.getElementById("in_to_px"));
+    return parseFloat(document.getElementById("in_to_px").value);
 }
 
 /**
@@ -231,20 +239,26 @@ function calculateFrontLength() {
 }
 
 /**
+ * get the value to pixel. Used for the preview.
+ *
+ * @return {number} Returns the value to pixel
+ */
+function getValueToPixel() {
+    if(document.getElementById("unit_in").checked == true)
+        return inchToPixel();
+    else
+        return convertMmToIn(inchToPixel());
+}
+
+/**
  * Draws the representation of the cut and board.
  *
  */
 function draw() {
-    var vtp = 0;  //Value To Pixel
-    var margin = 10;
+    var vtp = getValueToPixel();  //Value To Pixel
     var bottom = parseInt(canvas.height) - margin; //To have the y go up and (0,0) is in the bottom left corner
     var cutPath = findCutPath();
     var bitPath = findBitPath(cutPath);
-
-    if(document.getElementById("unit_in").checked == true)
-        vtp = inchToPixel();
-    else
-        vtp = convertMmToIn(inchToPixel());
 
     //Convertion of the real value to the representation value
     cutPath.start.x = margin + cutPath.start.x * vtp;
@@ -334,6 +348,7 @@ function initialize() {
     cutHeight = document.getElementById("cut_height");
 
     canvas = document.getElementById("canvas");
+    changeCanvasHeight();
     // canvas.height = document.getElementById("form_chop").clientHeight;
     // canvas.width = parseInt(document.getElementById("form_chop").clientWidth)*2;
     ctx = canvas.getContext("2d");
@@ -378,6 +393,7 @@ function initialize() {
 
     document.getElementById("in_to_px").addEventListener("change", function(e) {
         checkFloat(this);
+        changeCanvasHeight();
         draw();
     });
 
@@ -409,6 +425,7 @@ function initialize() {
     });
     document.getElementById("board_length").addEventListener("change", function(e) {
         checkFloat(this);
+        changeCanvasHeight();
         draw();
     });
     document.getElementById("reverse").addEventListener("click", function(e) {
