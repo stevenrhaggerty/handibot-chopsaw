@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
     <script type="text/javascript" src="js/modernizr.js"></script>
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/foundation.min.js"></script>
@@ -55,23 +55,38 @@
                     <label for="unit_in">Inches</label>
                     <input id="unit_mm" type="radio" name="unit" value="mm" />
                     <label for="unit_mm">Millimeters</label>
-                    <br />
-                    <input id="safe_z" type="text" name="safe_z" value="0.5" />
-                    <label for="safe_z">Safe Z</label>
+                    <div class="row">
+                        <div class="small-4 columns">
+                            <input id="safe_z" type="text" name="safe_z" value="0.5" />
+                        </div>
+                        <div class="small-8 columns">
+                            <label class="inline left" for="safe_z">Safe Z</label>
+                        </div>
+                    </div>
                 </fieldset>
                 <fieldset>
                     <legend>Bit settings</legend>
-                    <input id="bit_diameter" type="text" name="bit_diameter" value="0.5" />
-                    <label for="bit_diameter">Bit Diameter</label>
-                    <br />
-                    <input id="bit_length" type="text" name="bit_length" value="0.5" />
-                    <label for="bit_length">Bit Length</label>
+                    <div class="row">
+                        <div class="small-6 columns">
+                            <label for="bit_diameter">Bit Diameter</label>
+                            <input id="bit_diameter" type="text" name="bit_diameter" value="0.5" />
+                        </div>
+                        <div class="small-6 columns">
+                            <label for="bit_length">Bit Length</label>
+                            <input id="bit_length" type="text" name="bit_length" value="0.5" />
+                        </div>
+                    </div>
                 </fieldset>
                 <fieldset>
                     <legend>Miter</legend>
-                    <input id="angle" type="text" name="angle" value="0" />
-                    <label for="angle">Miter angle</label>
-                    <br />
+                    <div class="row">
+                        <div class="small-4 columns">
+                            <input  id="angle" type="text" name="angle" value="0" />
+                        </div>
+                        <div class="small-8 columns">
+                            <label class="left inline" for="angle">Miter angle</label>
+                        </div>
+                    </div>
                     <input id="tilt_right" type="radio" name="tilt" value="right" checked />
                     <label for="tilt_right">Tilt the miter to the right</label>
                     <br />
@@ -80,22 +95,48 @@
                 </fieldset>
                 <fieldset>
                     <legend>Board</legend>
-                    <input id="board_length" type="text" name="board_length" value="10" />
-                    <label for="board_length">Board length</label>
-                    <br />
-                    <input id="back_length" type="text" name="back_length" value="20" />
-                    <label class="blue" for="back_length">Cut length (back edge)</label>
-                    <br />
-                    <input id="front_length" type="text" name="front_length" value="20" />
-                    <label class="green" for="front_length">Cut length (front edge)</label>
-                    <br />
+                    <div class="row">
+                        <div class="small-4 columns">
+                            <input id="board_length" type="text" name="board_length" value="10" />
+                        </div>
+                        <div class="small-8 columns">
+                            <label  class="inline left" for="board_length">Board length</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="small-4 columns">
+                            <input id="back_length" type="text" name="back_length" value="20" />
+                        </div>
+                        <div class="small-8 columns">
+                            <label class="blue inline left" for="back_length">Cut length (back edge)</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="small-4 columns">
+                            <input id="front_length" type="text" name="front_length" value="20" />
+                        </div>
+                        <div class="small-8 columns">
+                            <label class="green inline left" for="front_length">Cut length (front edge)</label>
+                        </div>
+                    </div>
                     <button id="reverse" type="button">Reverse the cut direction</button>
                     <br />
-                    <input id="board_thickness" type="text" name="board_thickness" value="0.75" />
-                    <label for="board_thickness">Board thickness</label>
-                    <br />
-                    <input id="cut_height" type="text" name="cut_height" value="0.00" />
-                    <label for="cut_height">Cut height (from tabletop)</label>
+                    <div class="row">
+                        <div class="small-4 columns">
+                            <input id="board_thickness" type="text" name="board_thickness" value="0.75" />
+                        </div>
+                        <div class="small-8 columns">
+                            <label class="inline left" for="board_thickness">Board thickness</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="small-4 columns">
+                            <input id="cut_height" type="text" name="cut_height" value="0.00" />
+                        </div>
+                        <div class="small-8 columns">
+                            <label class="inline left" for="cut_height">Cut height (from tabletop)</label>
+                        </div>
+                    </div>
                 </fieldset>
                 <fieldset>
                     <legend>Cut</legend>
@@ -105,22 +146,24 @@
                     <input id="cut_pos_center" type="radio" name="cut_pos" value="center" />
                     <label for="cut_pos_center">Cut on center of the line</label>
                     <br />
-                    <button id="draw" type="button">Show preview</button>
+                    <button id="draw" type="button" class="hide-for-medium-up">Show preview</button>
                     <button id="make" type="button">Make the cut</button>
                 </fieldset>
             </form>
         </div>
 
         <div class="large-8 columns" id="preview">
-            <input id="in_to_px" type="text" name="in_to_px" value="10" />
-            <label for="in_to_px">Pixels for an inch</label>
-            <br />
-            <canvas id="canvas" width="300" height="300"></canvas>
+            <div class="show-for-medium-up">
+                <input id="in_to_px" type="text" name="in_to_px" value="10" />
+                <label for="in_to_px">Pixels for an inch</label>
+                <br />
+                <canvas id="canvas" width="300" height="300"></canvas>
+            </div>
         </div>
     </div>
 
     <script>
-        $(document).foundation();
+$(document).foundation();
     </script>
 </body>
 </html>
