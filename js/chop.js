@@ -14,11 +14,27 @@ var cutBack = true;
 var margin = 10;  //Margin in the canvas
 
 /**
- * Change the height of the canvas (according to the board length and inch to pixel.
+ * Change the width of the canvas (according to the edges).
+ *
+ */
+function changeCanvasWidth() {
+    var width = parseFloat(backLength.val());
+    //We let a margin of 10 pixels to avoid display problems
+    var parentW = parseFloat($("#canvas").parent().width()) - 10;
+
+    if(width < parseFloat(frontLength.val()))
+        width = parseFloat(frontLength.val());
+    width = width * getValueToPixel() + 2 * margin;
+
+    canvas.width = (width < parentW) ? width : parentW;
+}
+
+/**
+ * Change the height of the canvas (according to the board length and inch to pixel).
  *
  */
 function changeCanvasHeight() {
-    var height = parseFloat($("#board_length").val()) * getValueToPixel() + 2 * margin;
+    var height = parseFloat(boardLength.val()) * getValueToPixel() + 2 * margin;
     canvas.height = (height < 600) ? height : 600;
 }
 
@@ -255,9 +271,14 @@ function getValueToPixel() {
  */
 function draw() {
     var vtp = getValueToPixel();  //Value To Pixel
-    var bottom = parseInt(canvas.height) - margin; //To have the y go up and (0,0) is in the bottom left corner
     var cutPath = findCutPath();
     var bitPath = findBitPath(cutPath);
+    var bottom = 0; //To have the y go up and (0,0) is in the bottom left corner
+
+    //Checking canvas size
+    changeCanvasWidth();
+    changeCanvasHeight();
+    bottom = parseInt(canvas.height) - margin; //To have the y go up and (0,0) is in the bottom left corner
 
     //Convertion of the real value to the representation value
     cutPath.start.x = margin + cutPath.start.x * vtp;
@@ -349,6 +370,7 @@ function initialize() {
     //NOTE: Don't use JQuery for canvas  => it acts weird when changing height
     canvas = document.getElementById("canvas");
     changeCanvasHeight();
+    changeCanvasHeight();
     ctx = canvas.getContext("2d");
 
     frontLength.attr("disabled", cutBack);
@@ -387,11 +409,10 @@ function initialize() {
 
     $("#in_to_px").change(function(e) {
         checkFloat($(this));
-        changeCanvasHeight();
         draw();
     });
 
-    $("#bit_diameter").change(function(e) {
+    bitDiameter.change(function(e) {
         checkFloat($(this));
         draw();
     });
@@ -409,17 +430,16 @@ function initialize() {
     });
 
     //The board change
-    $("#front_length").change(function(e) {
+    frontLength.change(function(e) {
         checkFloat($(this));
         draw();
     });
-    $("#back_length").change(function(e) {
+    backLength.change(function(e) {
         checkFloat($(this));
         draw();
     });
-    $("#board_length").change(function(e) {
+    boardLength.change(function(e) {
         checkFloat($(this));
-        changeCanvasHeight();
         draw();
     });
 
