@@ -378,7 +378,7 @@ function initialize() {
         frontLength.val(convertMmToIn(frontLength.val()));
         boardThickness.val(convertMmToIn(boardThickness.val()));
         cutHeight.val(convertMmToIn(cutHeight.val()));
-    }, false);
+    });
 
     $("#unit_mm").change(function(event) {
         bitDiameter.val(convertInToMm(bitDiameter.val()));
@@ -389,7 +389,7 @@ function initialize() {
         frontLength.val(convertInToMm(frontLength.val()));
         boardThickness.val(convertInToMm(boardThickness.val()));
         cutHeight.val(convertInToMm(cutHeight.val()));
-    }, false);
+    });
 
     $("#in_to_px").change(function(e) {
         checkFloat($(this));
