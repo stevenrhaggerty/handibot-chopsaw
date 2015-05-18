@@ -14,15 +14,9 @@ var margin = 10;  //Margin in the canvas
  *
  */
 function changeCanvasWidth() {
-    var width = parseFloat(backLength.val());
     //We let a margin of 10 pixels to avoid display problems
     var parentW = parseFloat($("#canvas").parent().width()) - 10;
-
-    if(width < parseFloat(frontLength.val()))
-        width = parseFloat(frontLength.val());
-    width = width * getValueToPixel() + 2 * margin;
-
-    canvas.width = (width < parentW) ? width : parentW;
+    canvas.width = parentW;
 }
 
 /**
