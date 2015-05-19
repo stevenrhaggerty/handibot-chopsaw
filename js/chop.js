@@ -1,3 +1,9 @@
+/**
+ * Specific scripts for the FabMo-ChopSaw App.
+ * Manage the events of the app, draw the preview and generate the gcode.
+ * The GCode is sent to the FabMo-Dashboard.
+ */
+
 //Global variables definition (initialized in the function "initialize"):
 var safeZ;
 var bitDiameter, bitLength;
