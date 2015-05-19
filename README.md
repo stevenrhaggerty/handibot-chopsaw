@@ -2,7 +2,7 @@
 
 ##About
 This app is used to cut a board as would do a Chop Saw or a Miter Saw. 
-This app as to be integrated to the FabMo Dashboard.
+This app has to be integrated to the FabMo Dashboard.
 
 #Installation
 * Clone this repository
