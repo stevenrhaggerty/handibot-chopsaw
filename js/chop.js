@@ -66,13 +66,13 @@ function findBitPath(cutPath) {
         end : {x : cutPath.end.x, y : cutPath.end.y}
     };
 
-    if($("#cut_pos_right").prop("checked") == true) {
+    if($("#cut_pos_right").prop("checked") === true) {
         checkFloat(bitDiameter);
         halfBit = (parseFloat(bitDiameter.val())) / 2;
 
         shift = halfBit * Math.cos(parseFloat(angle.val())*Math.PI/180);
         rise = halfBit * Math.sin(parseFloat(angle.val())*Math.PI/180);
-        if($("#tilt_right").prop("checked") == true) {
+        if($("#tilt_right").prop("checked") === true) {
             rise *= -1;
         }
 
@@ -111,11 +111,11 @@ function generateGCode() {
     var safe = parseFloat(safeZ.val());
 
     gcode += "(Cutting straight)\n";
-    if($("#unit_in").prop("checked") == true)
+    if($("#unit_in").prop("checked") === true)
         gcode += "G20 (inches)\n";
     else
         gcode += "G21 (millimeters)\n";
-    
+
     //TODO: see if it's good
     gcode += "(Go to the start cut position)\n";
     gcode += "G0 Z" + safe.toFixed(5) + "\n";
@@ -141,6 +141,8 @@ function generateGCode() {
     //The Z position is already correct
     gcode += "(Go to the initial position)\n";
     gcode += "G0 X0 Y0\n";
+    gcode += "M05\n";
+    gcode += "M02\n";
 
     return gcode;
 }
@@ -215,7 +217,7 @@ function calculateBackLength() {
 
     checkFloat(frontLength);
 
-    if($("#tilt_right").prop("checked") == true)
+    if($("#tilt_right").prop("checked") === true)
         backLength.val(parseFloat(frontLength.val()) + difference);
     else
         backLength.val(parseFloat(frontLength.val()) - difference);
@@ -231,7 +233,7 @@ function calculateFrontLength() {
 
     checkFloat(backLength);
 
-    if($("#tilt_right").prop("checked") == true)
+    if($("#tilt_right").prop("checked") === true)
         frontLength.val(parseFloat(backLength.val()) - difference);
     else
         frontLength.val(parseFloat(backLength.val()) + difference);
@@ -243,7 +245,7 @@ function calculateFrontLength() {
  * @return {number} Returns the value to pixel
  */
 function getValueToPixel() {
-    if($("#unit_in").prop("checked") == true)
+    if($("#unit_in").prop("checked") === true)
         return inchToPixel();
     else
         return convertMmToIn(inchToPixel());
