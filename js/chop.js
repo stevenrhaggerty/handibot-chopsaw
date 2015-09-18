@@ -6,7 +6,7 @@
 
 //Global variables definition (initialized in the function "initialize"):
 var safeZ;
-var bitDiameter, bitLength;
+var bitDiameter, bitLength, feedrate;
 var angle;
 var boardLength, backLength, frontLength;
 var boardThickness, cutHeight;
@@ -97,6 +97,7 @@ function generateGCode() {
     //check all the input
     checkFloat(bitDiameter);
     checkFloat(bitLength);
+    checkFloat(feedrate);
     checkFloat(safeZ);
     checkFloat(angle);
     checkFloat(boardLength);
@@ -109,6 +110,7 @@ function generateGCode() {
     var zEnd = parseFloat(cutHeight.val()) - parseFloat(boardThickness.val());
     var bitL = parseFloat(bitLength.val());
     var safe = parseFloat(safeZ.val());
+    var feed = parseFloat(feedrate.val());
 
     gcode += "(Cutting straight)\n";
     if($("#unit_in").prop("checked") === true)
@@ -116,9 +118,10 @@ function generateGCode() {
     else
         gcode += "G21 (millimeters)\n";
 
-    //TODO: see if it's good
+    gcode += "G90\n";
+
     gcode += "(Go to the start cut position)\n";
-    gcode += "G0 Z" + safe.toFixed(5) + "\n";
+    gcode += "G0 Z" + safe.toFixed(5) + " F" + feed.toFixed(5) + "\n";
     gcode += "G0 X" + bitPath.start.x.toFixed(5) + " Y" + bitPath.start.y.toFixed(5) + "\n";
 
     gcode += "M3 (Spindle on clock wise)\n";
@@ -345,6 +348,7 @@ function draw() {
 function initialize() {
     bitDiameter = $("#bit_diameter");
     bitLength = $("#bit_length");
+    feedrate = $("#feedrate");
     safeZ = $("#safe_z");
     angle = $("#angle");
     boardLength = $("#board_length");
@@ -374,6 +378,7 @@ function initialize() {
     $("#unit_in").change(function(event) {
         bitDiameter.val(convertMmToIn(bitDiameter.val()));
         bitLength.val(convertMmToIn(bitLength.val()));
+        feedrate.val(convertMmToIn(feedrate.val()));
         safeZ.val(convertMmToIn(safeZ.val()));
         boardLength.val(convertMmToIn(boardLength.val()));
         backLength.val(convertMmToIn(backLength.val()));
@@ -385,6 +390,7 @@ function initialize() {
     $("#unit_mm").change(function(event) {
         bitDiameter.val(convertInToMm(bitDiameter.val()));
         bitLength.val(convertInToMm(bitLength.val()));
+        feedrate.val(convertInToMm(feedrate.val()));
         safeZ.val(convertInToMm(safeZ.val()));
         boardLength.val(convertInToMm(boardLength.val()));
         backLength.val(convertInToMm(backLength.val()));
