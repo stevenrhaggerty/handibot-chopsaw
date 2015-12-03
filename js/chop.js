@@ -119,12 +119,12 @@ function generateGCode() {
         gcode += "G21 (millimeters)\n";
 
     gcode += "G90\n";
+    gcode += "M4 (Spindle on)\n";
 
     gcode += "(Go to the start cut position)\n";
     gcode += "G0 Z" + safe.toFixed(5) + " F" + feed.toFixed(5) + "\n";
     gcode += "G0 X" + bitPath.start.x.toFixed(5) + " Y" + bitPath.start.y.toFixed(5) + "\n";
 
-    gcode += "M3 (Spindle on clock wise)\n";
     gcode += "(Make the cut)\n";
 
     //Have to do multiple passes because of the height of the bit
@@ -144,8 +144,8 @@ function generateGCode() {
     //The Z position is already correct
     gcode += "(Go to the initial position)\n";
     gcode += "G0 X0 Y0\n";
-    gcode += "M05\n";
-    gcode += "M02\n";
+    gcode += "M5\n";
+    gcode += "M2\n";
 
     return gcode;
 }

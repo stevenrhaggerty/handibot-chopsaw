@@ -1,10 +1,11 @@
 {
-	"name":"Chop Saw",
-	"main":"./index.html",
-	"icon":"icon.png",
-	"icon_color":"green",
-	"version":"0.0.1",
-	"author":"Alex",
-	"target":["3d_printer","router","laser_cutter"],
-	"id":"chop-saw"
+    "name":"Chop Saw",
+    "main":"./index.html",
+    "icon":"icon.png",
+    "icon_color":"green",
+    "version":"0.0.1",
+    "author":"Alex",
+    "target":["router","laser_cutter"],
+    "id":"chop-saw",
+    "description":"Enable to make angle cut."
 }
