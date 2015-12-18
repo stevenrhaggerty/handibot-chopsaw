@@ -188,8 +188,15 @@ function convertMmToIn(millimeters) {
  * @return {number} The number of pixel for an inch.
  */
 function inchToPixel() {
-    checkFloat($("#in_to_px"));
-    return parseFloat($("#in_to_px").val());
+    if ($(window).width() > 1200) {
+        return parseFloat(35);
+    } else if ($(window).width() > 1000) {
+        return parseFloat(25);
+    }  else if ($(window).width() > 600) {
+        return parseFloat(20);
+    } else {
+        return parseFloat(15);
+    }
 }
 
 /**
@@ -363,8 +370,7 @@ function initialize() {
     changeCanvasHeight();
     ctx = canvas.getContext("2d");
 
-    frontLength.attr("disabled", cutBack);
-    backLength.attr("disabled", !cutBack);
+
 
     draw();
 

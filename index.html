@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
-    <script type="text/javascript" src="js/modernizr.js"></script>
-    <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/foundation.min.js"></script>
-    <script type="text/javascript" src="js/dashboard.js"></script>
-    <script type="text/javascript" src="js/chop.js"></script>
-    <link rel="stylesheet" href="css/foundation.min.css" />
+    <link rel="stylesheet" href="css/reset.css"/>
+    <link rel="stylesheet" href="css/pure-min.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    
+    <link rel="stylesheet" href="css/grids-responsive-min.css"/>
+    <link rel="stylesheet" href="css/forms-min.css"/>
     <link rel="stylesheet" href="css/styles.css" />
     <title>Chop Saw App</title>
 </head>
 <body>
-    <div class=row>
-        <p id="show_explanations">Click here to show/hide the explanations.</p>
-        <div class="large-12 columns" id="explanations">
+    <div class=pure-g>
+        <p id="show_explanations">?</p>
+        <div class="pure-u-1" id="explanations">
             <p>This app is used to cut a board as would do a Chop Saw or a Miter Saw. If an input is not a number, it will be converted as zero or the most close number. The preview is the representation of the board. From the left to the right is the X axis (the edge length), from the top to bottom is the Y axis (the board length). Set the zero to the left corner of the board.</p>
             <h3>General settings</h3>
             <ul>
@@ -47,140 +47,142 @@
             <strong>Pixels for an inch</strong>: chose how much pixels represent an inch on the screen (this has no incidence on the final work).
         </div>
     </div>
-    <div class="row">
-        <div class="large-4 columns">
-            <form id="form_chop" action="">
-                <fieldset>
-                    <legend>Settings</legend>
-                    <input id="unit_in" type="radio" name="unit" value="in" checked />
-                    <label for="unit_in">Inches</label>
-                    <input id="unit_mm" type="radio" name="unit" value="mm" />
-                    <label for="unit_mm">Millimeters</label>
-                    <div class="row">
-                        <div class="small-4 columns">
-                            <input id="safe_z" type="text" name="safe_z" value="0.5" />
-                        </div>
-                        <div class="small-8 columns">
-                            <label class="inline left" for="safe_z">Safe Z</label>
-                        </div>
+    <div class="pure-g">
+        <div class="pure-u-1 pure-u-md-2-3" id="preview">
+                <div class="pure-g">
+                    <div class="pure-u-1">
+                        <canvas id="canvas" class="pure-img" ></canvas>
                     </div>
-                </fieldset>
-                <fieldset>
-                    <legend>Bit settings</legend>
-                    <div class="row">
-                        <div class="small-6 columns">
-                            <label for="bit_diameter">Bit Diameter</label>
-                            <input id="bit_diameter" type="text" name="bit_diameter" value="0.5" />
+                </div>
+        </div>
+        <div class="pure-u-1 pure-u-md-1-3">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active"><a href="#help" role="tab" data-toggle="tab">Basic</a></li>
+                <li><a href="#tab-control" role="tab" data-toggle="tab">Bit Settings</a></li>
+                <li><a href="#tab-advanced" role="tab" data-toggle="tab">Advanced</a></li>
+            </ul>
+            <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane active" id="help"> 
+                    <form id="form_chop" class="pure-form pure-form-aligned"action="">
+                        <legend>Settings</legend>
+                        <input id="unit_in" type="radio" name="unit" value="in" checked />
+                        <label for="unit_in">Inches</label>
+                        <input id="unit_mm" type="radio" name="unit" value="mm" />
+                        <label for="unit_mm">Millimeters</label>
+                                            <fieldset>
+                        
+                        <legend>Miter</legend>
+                        <div class="pure-g">
+                            <div class="pure-u-1 pure-u-lg-1-3">
+                                <input  id="angle" type="text" name="angle" value="0" />
+                            </div>
+                            <div class="pure-u-1 pure-u-lg-1-2">
+                                <label class="left inline" for="angle">Cut Angle˚</label>
+                            </div>
                         </div>
-                        <div class="small-6 columns">
-                            <label for="bit_length">Bit Length</label>
-                            <input id="bit_length" type="text" name="bit_length" value="0.5" />
+                        <input id="tilt_right" type="radio" name="tilt" value="right" checked />
+                        <label for="tilt_right">Cut to the right</label>
+                        <br />
+                        <input id="tilt_left" type="radio" name="tilt" value="left" />
+                        <label for="tilt_left">Cut to the left</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Board</legend>
+                        <div class="pure-g">
+                            <div class="pure-u-1 pure-u-lg-1-3">
+                                <input id="board_length" type="text" name="board_length" value="10" />
+                            </div>
+                            <div class="pure-u-1 pure-u-lg-1-2">
+                                <label  class="inline left" for="board_length">Board Width</label>
+                            </div>
                         </div>
+                        <div class="pure-g">
+                            <div class="pure-u-1 pure-u-lg-1-3">
+                                <input id="back_length" type="text" name="back_length" value="20" />
+                            </div>
+                            <div class="pure-u-1 pure-u-lg-1-2">
+                                <label class="blue inline left" for="back_length">Cut length (back edge)</label>
+                            </div>
+                        </div>
+                        <div class="pure-g">
+                            <div class="pure-u-1 pure-u-lg-1-3">
+                                <input id="front_length" type="text" name="front_length" value="20" />
+                            </div>
+                            <div class="pure-u-1 pure-u-lg-1-2">
+                                <label class="green inline left" for="front_length">Cut length (front edge)</label>
+                            </div>
+                        </div>
+                        <div class="pure-g">
+                            <div class="pure-u-1 pure-u-lg-1-3">
+                                <input id="board_thickness" type="text" name="board_thickness" value="0.75" />
+                            </div>
+                            <div class="pure-u-1 pure-u-lg-1-2">
+                                <label class="inline left" for="board_thickness">Board thickness</label>
+                            </div>
+                        </div>
+                        <div class="pure-g">
+                            <div class="pure-u-1 pure-u-lg-1-3">
+                                <input id="cut_height" type="text" name="cut_height" value="0.00" />
+                            </div>
+                            <div class="pure-u-1 pure-u-lg-1-2">
+                                <label class="inline left" for="cut_height">Cut height (from tabletop)</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+
+                    </fieldset>
+                    </form>
+                   </div>
+                   <div  role="tabpanel" class="tab-pane" id="tab-control">
+                        <fieldset>
+                            <legend>Bit settings</legend>
+                            <div class="pure-g">
+                            <div class="pure-u-1 pure-u-md-1-2">
+                                    <label for="bit_diameter">Bit Diameter</label>
+                                    <input id="bit_diameter" type="text" name="bit_diameter" value="0.5" />
+                                </div>
+                                <div class="pure-u-1 pure-u-md-1-2">
+                                    <label for="bit_length">Bit Length</label>
+                                    <input id="bit_length" type="text" name="bit_length" value="0.5" />
+                                </div>
+                            </div>
+                            <div class="pure-g">
+                                <div class="pure-u-1 pure-u-md-1-3">
+                                    <input  id="feedrate" type="text" name="feedrate" value="120" />
+                                </div>
+                                <div class="pure-u-1 pure-u-md-2-3">
+                                    <label class="left inline" for="feedrate">Feed rate</label>
+                                </div>
+                            </div>
+                        </fieldset>
                     </div>
-                    <div class="row">
-                        <div class="small-4 columns">
-                            <input  id="feedrate" type="text" name="feedrate" value="120" />
-                        </div>
-                        <div class="small-8 columns">
-                            <label class="left inline" for="feedrate">Feed rate</label>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend>Miter</legend>
-                    <div class="row">
-                        <div class="small-4 columns">
-                            <input  id="angle" type="text" name="angle" value="0" />
-                        </div>
-                        <div class="small-8 columns">
-                            <label class="left inline" for="angle">Miter angle</label>
-                        </div>
-                    </div>
-                    <input id="tilt_right" type="radio" name="tilt" value="right" checked />
-                    <label for="tilt_right">Tilt the miter to the right</label>
-                    <br />
-                    <input id="tilt_left" type="radio" name="tilt" value="left" />
-                    <label for="tilt_left">Tilt the miter to the left</label>
-                </fieldset>
-                <fieldset>
-                    <legend>Board</legend>
-                    <div class="row">
-                        <div class="small-4 columns">
-                            <input id="board_length" type="text" name="board_length" value="10" />
-                        </div>
-                        <div class="small-8 columns">
-                            <label  class="inline left" for="board_length">Board length</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="small-4 columns">
-                            <input id="back_length" type="text" name="back_length" value="20" />
-                        </div>
-                        <div class="small-8 columns">
-                            <label class="blue inline left" for="back_length">Cut length (back edge)</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="small-4 columns">
-                            <input id="front_length" type="text" name="front_length" value="20" />
-                        </div>
-                        <div class="small-8 columns">
-                            <label class="green inline left" for="front_length">Cut length (front edge)</label>
-                        </div>
-                    </div>
-                    <button id="reverse" type="button">Reverse the cut direction</button>
-                    <br />
-                    <div class="row">
-                        <div class="small-4 columns">
-                            <input id="board_thickness" type="text" name="board_thickness" value="0.75" />
-                        </div>
-                        <div class="small-8 columns">
-                            <label class="inline left" for="board_thickness">Board thickness</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="small-4 columns">
-                            <input id="cut_height" type="text" name="cut_height" value="0.00" />
-                        </div>
-                        <div class="small-8 columns">
-                            <label class="inline left" for="cut_height">Cut height (from tabletop)</label>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend>Cut</legend>
-                    <input id="cut_pos_right" type="radio" name="cut_pos" value="right" checked />
-                    <label for="cut_pos_right">Cut to the right of the line</label>
-                    <br />
-                    <input id="cut_pos_center" type="radio" name="cut_pos" value="center" />
-                    <label for="cut_pos_center">Cut on center of the line</label>
-                </fieldset>
-            </form>
+                    <div  role="tabpanel" class="tab-pane" id="tab-advanced">
+                        <input id="safe_z" type="text" name="safe_z" value="0.5" />
+                        <label class="inline left" for="safe_z">Safe Z</label>
+                        <legend>Cut</legend>
+                        <input id="cut_pos_right" type="radio" name="cut_pos" value="right" checked />
+                        <label for="cut_pos_right">Cut to the right of the line</label>
+                        <br />
+                        <input id="cut_pos_center" type="radio" name="cut_pos" value="center" />
+                        <label for="cut_pos_center">Cut on center of the line</label>
+                   </div>
+                </form>
+            </div>
         </div>
 
-        <div class="large-8 columns" id="preview">
-                <div class="row">
-                    <div class="small-12 columns">
-                        <canvas id="canvas" height="300"></canvas>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="small-3 columns">
-                        <input id="in_to_px" type="text" name="in_to_px" value="10" />
-                    </div>
-                    <div class="small-9 columns">
-                        <label class="left inline" for="in_to_px">Pixels for an inch</label>
-                    </div>
-                </div>
-            </div>
+
     </div>
-    <div class="row">
-        <div class="small-12 columns">
+    <div class="pure-g">
+        <div class="pure-u-1">
             <button id="make" type="button">Make the cut</button>
         </div>
     </div>
-    <script>
-$(document).foundation();
-    </script>
+
+    <script type="text/javascript" src="js/modernizr.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/dashboard.js"></script>
+    <script type="text/javascript" src="js/chop.js"></script>
 </body>
 </html>

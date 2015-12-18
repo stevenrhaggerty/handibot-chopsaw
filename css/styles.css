@@ -4,8 +4,15 @@
 
 canvas { border: 1px solid #ddd; }
 
-form { border: 1px solid #ddd; margin-bottom: 0.2em; }
 
+body {
+    background-color: #eeeeee;
+}
+.tab-content{
+    background-color: #ffffff;
+    padding: 1em;
+    border-radius: 3px;
+}
 #show_explanations {
     margin: 2px; 
     cursor: pointer;
@@ -14,8 +21,6 @@ form { border: 1px solid #ddd; margin-bottom: 0.2em; }
 }
 
 #explanations {
-    border-bottom: 1px solid #ddd;
-    border-top: 1px solid #ddd;
     margin-bottom: 3px;
     display: none;
     text-align: justify;
